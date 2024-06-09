@@ -27,7 +27,13 @@ app.get("/api/:date?", (req, res) => {
   let date = new Date();
 
   if (req.params.date) {
-    date = new Date(parseInt(req.params.date));
+    const digitsOnlyRegExp = new RegExp(/^\d+$/);
+
+    if (digitsOnlyRegExp.test(req.params.date)) {
+      date = new Date(parseInt(req.params.date));
+    } else {
+      date = new Date(req.params.date);
+    }
   }
 
   if (isNaN(date)) {
